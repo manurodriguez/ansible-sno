@@ -1,0 +1,12 @@
+---
+# vars file for sno-installer
+pullsecret_file: "{{ dir }}/pull-secret.txt"
+cmd: openshift-install
+default_libvirt_pool_dir: "/var/lib/libvirt/images"
+
+# packages needed for the sno tasks
+packages_sno:
+  - libvirt
+  - python3
+  - jq
+  - podman

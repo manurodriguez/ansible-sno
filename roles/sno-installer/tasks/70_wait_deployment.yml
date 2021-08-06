@@ -1,0 +1,42 @@
+---
+- name: Wait for API port to respond and contain "ok"
+  uri:
+    url: 'https://api.{{ cluster }}.{{ domain}}:6443/readyz'
+    validate_certs: no
+    return_content: yes
+  register: api_ready
+  until:
+    - "'ok' in api_ready.content"
+    - api_ready.status == 200
+  retries: 180
+  delay: 10
+  tags: waitdeploy
+
+- name: Wait for Node to become ready
+  command:
+    cmd: |
+      oc get nodes
+  register: node_status
+  changed_when: false
+  until:
+    - "' Ready' in node_status.stdout"
+  retries: 180
+  delay: 10
+  environment:
+    KUBECONFIG: "{{ dir }}/auth/kubeconfig"
+  tags: waitdeploy
+
+- name: Wait for Cluster Operators to become available
+  shell:
+    cmd: |
+      oc get clusterversion --no-headers | awk '{print $2" "$4}'
+  register: cluster_status
+  changed_when: false
+  until:
+    - "'False' in cluster_status.stdout"
+    - version in cluster_status.stdout
+  retries: 180
+  delay: 10
+  environment:
+    KUBECONFIG: "{{ dir }}/auth/kubeconfig"
+  tags: waitdeploy
