@@ -13,7 +13,7 @@
     rm: true
     privileged: true
     command: |
-      iso ignition embed /data/{{ rhcos_live_uri }}
+      iso ignition embed /data/{{ live_iso_name }}
         --force
         --ignition-file /data/bootstrap-in-place-for-live-iso.ign
         --output /data/embedded.iso

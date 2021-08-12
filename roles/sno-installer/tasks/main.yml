@@ -14,7 +14,14 @@
   tags: rhcospath
 
 - include_tasks: 24_rhcos_image_live.yml
-  tags: rhcoslive
+  when: (live_iso_url is undefined) or (live_iso_url | length == 0)
+  tags: rhcos_live
+
+- include_tasks: 24_rhcos_image_live_mirror.yml
+  when:
+    - live_iso_url is defined
+    - live_iso_url | length > 0
+  tags: rhcos_live_mirror
 
 - include_tasks: 25_create_install_config.yml
   tags: installconfig

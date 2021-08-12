@@ -9,13 +9,13 @@
 
 - name: Set rhcos live base iso image fact
   set_fact:
-    baseliveiso: "{{ dir }}/{{ rhcos_live_uri }}"
+    live_iso_name: "{{ rhcos_live_uri }}"
   tags: rhcos_live
 
 - name: Download {{ rhcos_live_uri }}
   get_url:
     url:  "{{ rhcos_path }}{{ rhcos_live_uri }}"
-    dest: "{{ baseliveiso }}"
+    dest: "{{ dir }}/{{ live_iso_name }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '0644'
