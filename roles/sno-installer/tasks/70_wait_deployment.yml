@@ -1,5 +1,5 @@
 ---
-- name: Wait for API port to respond and contain "ok"
+- name: "Wait for API to be available"
   uri:
     url: 'https://api.{{ cluster }}.{{ domain}}:6443/readyz'
     validate_certs: no
@@ -12,7 +12,7 @@
   delay: 10
   tags: waitdeploy
 
-- name: Wait for Node to become ready
+- name: "Wait for Node to become Ready"
   command:
     cmd: |
       oc get nodes
@@ -26,17 +26,15 @@
     KUBECONFIG: "{{ dir }}/auth/kubeconfig"
   tags: waitdeploy
 
-- name: Wait for Cluster Operators to become available
+- name: "Wait for installation until completion"
   shell:
-    cmd: |
-      oc get clusterversion --no-headers | awk '{print $2" "$4}'
-  register: cluster_status
-  changed_when: false
-  until:
-    - "'False' in cluster_status.stdout"
-    - version in cluster_status.stdout
-  retries: 180
-  delay: 10
+    cmd: >
+      oc get clusterversion/version -o json
+      | jq -r '.status.history[] | select(.version == "{{ version }}").state'
+  register: installation_progress
+  until: installation_progress.stdout.find("Completed") > -1
+  retries: 50
+  delay: 60
   environment:
     KUBECONFIG: "{{ dir }}/auth/kubeconfig"
   tags: waitdeploy
