@@ -11,4 +11,3 @@ https_proxy: ""
 ipv4_baremetal: false
 ipv4_provisioning: false
 dualstack_baremetal: false
-webserver_url: ""
