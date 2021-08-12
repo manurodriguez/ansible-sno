@@ -2,7 +2,7 @@
 - name: 'Single Node Openshift Deployment on Libvirt'
   hosts: provisioner
   vars:
-    version: "latest-4.8"
+    version: "4.8.5"
     build: "ga"
 
   tasks:
