@@ -4,7 +4,11 @@ baseDomain: {{ domain }}
 proxy:
   httpProxy: {{ http_proxy }}
   httpsProxy: {{ https_proxy }}
-  noProxy: {{ (no_proxy_list|length) | ternary(no_proxy_list + ',' + provisioning_subnet, provisioning_subnet) }}
+{%if no_proxy_list|length %}
+  noProxy: {{ domain + ',' + cluster + '.' + domain + ',' + no_proxy_list + ',' + extcidrnet }}
+{% else %}
+  noProxy: {{ domain + ',' + cluster + '.' + domain + ',' +  extcidrnet }}
+{% endif %}
 {% endif %}
 metadata:
   name: {{ cluster }}
