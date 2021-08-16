@@ -4,7 +4,10 @@
   vars:
     version: "4.8.5"
     build: "ga"
-
+  environment:
+    no_proxy: ".{{ cluster }}.{{ domain }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
   tasks:
 
   - name: "Prepare SNO Host"
@@ -14,3 +17,4 @@
   - name: "Deploy SNO VM"
     import_role:
       name: sno-installer
+
