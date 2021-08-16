@@ -11,3 +11,6 @@ https_proxy: ""
 ipv4_baremetal: false
 ipv4_provisioning: false
 dualstack_baremetal: false
+vm_net_name: sno
+vm_pool_name: default
+vm_nic_mac: "52:54:00:ee:42:e1"
