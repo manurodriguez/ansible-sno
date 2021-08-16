@@ -1,13 +1,11 @@
 ---
 # vars file for node-prep
-# the ternary states if provision host has no online access
-# just verify the python3-crypto, python3-pyghmi packages are present
-# otherwise attempt to install them from trunk.rdoproject.org
 package_list:
   - "{{ firewall }}"
   - tar
   - libvirt
   - qemu-kvm
+  - virt-install
   - python3-devel
   - jq
   - python3-libvirt
@@ -15,3 +13,4 @@ package_list:
   - python3-yaml
   - libsemanage-python3
   - policycoreutils-python3
+  - podman
