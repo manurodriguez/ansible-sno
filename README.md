@@ -11,6 +11,7 @@ Install the following in the hypervisor (provisioner node)
 dnf install -y ansible python3-netaddr
 ansible-galaxy collection install containers.podman
 ansible-galaxy collection install ansible.posix
+ansible-galaxy collection install ansible.netcommon
 ```
 
 Configure the following in the inventory for ansible
