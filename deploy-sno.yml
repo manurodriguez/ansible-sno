@@ -5,7 +5,7 @@
     version: "4.8.5"
     build: "ga"
   environment:
-    no_proxy: ".{{ cluster }}.{{ domain }}"
+    no_proxy: ".{{ cluster }}.{{ domain }},{{ extcidrnet }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
   tasks:
