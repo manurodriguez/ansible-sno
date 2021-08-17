@@ -19,6 +19,9 @@
 - include_tasks: 60_enabled_services.yml
   tags: services
 
+- include_tasks: 70_cleanup_network.yml
+  tags: cleanup
+
 - include_tasks: 80_libvirt_pool.yml
   tags: storagepool
 
