@@ -14,6 +14,7 @@
       <hostname>console-openshift-console.apps.{{ cluster }}.{{ domain }}</hostname>
       <hostname>oauth-openshift.apps.{{ cluster }}.{{ domain }}</hostname>
       <hostname>canary-openshift-ingress-canary.apps.{{ cluster }}.{{ domain }}</hostname>
+      <hostname>master1.{{ cluster }}.{{ domain }}</hostname>
     </host>
   </dns>
   <ip address='{{ extcidrnet | ansible.netcommon.ipaddr('first_usable') }}' prefix='{{ extcidrnet | ansible.netcommon.ipaddr('prefix') }}'>

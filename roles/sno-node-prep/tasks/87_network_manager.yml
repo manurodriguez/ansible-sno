@@ -1,8 +1,11 @@
 ---
-- name: Define DNS entries to be redirected in aio.conf
+- name: Define DNS entries for dnsmasq
   copy:
-    content: "server=/api.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('first_usable') }}"
-    dest: /etc/NetworkManager/dnsmasq.d/aio.conf
+    content: |
+      address=/api.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
+      address=/.apps.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
+      address=/master1.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
+    dest: /etc/NetworkManager/dnsmasq.d/sno.conf
     owner: root
     group: root
   become: yes
@@ -11,7 +14,7 @@
 - name: Include dnsmasq in the DNS configuration of NetworkManager
   copy:
     content: "[main]\ndns=dnsmasq"
-    dest: /etc/NetworkManager/conf.d/aio.conf
+    dest: /etc/NetworkManager/conf.d/dnsmasq.conf
     owner: root
     group: root
   become: yes
