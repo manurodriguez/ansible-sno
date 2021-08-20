@@ -3,7 +3,7 @@
   set_fact:
     extramanifestsopenshift_path: "{{ customize_extramanifestsopenshift_path | default( 'roles/sno-installer/files/openshift/' ) }}"
 
-- name: Add Manifests from files dir
+- name: Add Manifests from openshift files dir
   copy:
     src: "{{ item }}"
     dest: "{{ dir }}/openshift/"
@@ -17,7 +17,7 @@
   set_fact:
     extramanifests_path: "{{ customize_extramanifests_path | default( 'roles/sno-installer/files/manifests/' ) }}"
 
-- name: Add Manifests from files dir
+- name: Add Manifests from manifest files dir
   copy:
     src: "{{ item }}"
     dest: "{{ dir }}/manifests/"
