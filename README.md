@@ -8,10 +8,10 @@
 
 Install the following in the hypervisor (provisioner node)
 ```bash
-dnf install -y ansible python3-netaddr
 ansible-galaxy collection install containers.podman
 ansible-galaxy collection install ansible.posix
 ansible-galaxy collection install ansible.netcommon
+ansible-galaxy collection install community.libvirt
 ```
 
 Configure the following in the inventory for ansible
