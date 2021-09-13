@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: provisioner
   remote_user: dci-openshift-agent
   roles:
-    - sno
+    - sno-installer

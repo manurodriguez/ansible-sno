@@ -1,23 +1,22 @@
 ---
 - name: Generate Embedded RHCOS LIVE ISO
-  containers.podman.podman_container:
-    name: iso-embedder
-    image: quay.io/coreos/coreos-installer:release
-    state: started
-    network: host
-    volume:
-      - /dev:/dev
-      - /run/udev:/run/udev
-      - "{{ dir }}:/data"
-    workdir: /data
-    rm: true
-    privileged: true
-    command: |
-      iso ignition embed /data/{{ live_iso_name }}
-        --force
-        --ignition-file /data/bootstrap-in-place-for-live-iso.ign
+  shell:
+    cmd: >
+      podman run
+      --pull=always
+      --privileged
+      --rm
+      -v /dev:/dev
+      -v /run/udev:/run/udev
+      -v "{{ dir }}:/data"
+      --workdir /data
+      quay.io/coreos/coreos-installer:release
+      iso ignition embed /data/{{ live_iso_name }} \
+        --force \
+        --ignition-file /data/bootstrap-in-place-for-live-iso.ign \
         --output /data/embedded.iso
   register: rhcos_iso_live_info
+  become: true
   tags: embedded
 
 - name: Set embedded iso in path fact

@@ -9,6 +9,7 @@
     dest: "{{ dir }}/openshift/"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+    mode: "u=rw,g=r,o=r"
   with_fileglob:
     - "{{ extramanifestsopenshift_path }}/*"
   tags: extramanifests
@@ -23,6 +24,7 @@
     dest: "{{ dir }}/manifests/"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+    mode: "u=rw,g=r,o=r"
   with_fileglob:
     - "{{ extramanifests_path }}/*"
   tags: extramanifests
@@ -39,6 +41,7 @@
       dest: "{{ dir }}/openshift/98-{{ item }}-etc-chrony.conf.yaml"
       owner: "{{ ansible_user }}"
       group: "{{ ansible_user }}"
+      mode: "u=rw,g=r,o=r"
     with_items:
       - master
   when: (clock_servers is defined) and (clock_servers | length > 0)

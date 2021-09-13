@@ -1,5 +1,5 @@
 ---
-# vars file for node-prep
+# vars file for sno-node-prep
 package_list:
   - "{{ firewall }}"
   - tar

@@ -2,12 +2,13 @@
 - name: Define DNS entries for dnsmasq
   copy:
     content: |
-      address=/api.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
-      address=/.apps.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
-      address=/master1.{{ cluster }}.{{ domain }}/{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}
+      address=/api.{{ cluster }}.{{ domain }}/{{ extcidrnet | ipaddr('10') | ipaddr('address') }}
+      address=/.apps.{{ cluster }}.{{ domain }}/{{ extcidrnet | ipaddr('10') | ipaddr('address') }}
+      address=/master1.{{ cluster }}.{{ domain }}/{{ extcidrnet | ipaddr('10') | ipaddr('address') }}
     dest: /etc/NetworkManager/dnsmasq.d/sno.conf
     owner: root
     group: root
+    mode: u=rw,g=r,o=r
   become: yes
   tags: dnsredirect
 
@@ -17,6 +18,7 @@
     dest: /etc/NetworkManager/conf.d/dnsmasq.conf
     owner: root
     group: root
+    mode: u=rw,g=r,o=r
   become: yes
   tags: dnsredirect
 

@@ -1,13 +1,13 @@
 ---
 - name: Get list of all Networks
-  community.libvirt.virt_net:
+  virt_net:
     command: list_nets
   register: all_nets
   become: yes
   tags: cleanup
 
 - name: Stop SNO network
-  community.libvirt.virt_net:
+  virt_net:
     command: destroy
     name: "{{ vm_net_name }}"
   become: yes
@@ -17,7 +17,7 @@
   tags: cleanup
 
 - name: Undefine SNO network
-  community.libvirt.virt_net:
+  virt_net:
     command: undefine
     name: "{{ vm_net_name }}"
   become: yes
@@ -30,23 +30,14 @@
   file:
     path: /etc/NetworkManager/dnsmasq.d/aio.conf
     state: absent
-  register: del_dnsmasq_aio
   become: yes
+  notify: Reload Network Manager
   tags: cleanup
 
 - name: Remove dnsmasq from the DNS configuration of NetworkManager
   file:
     path: /etc/NetworkManager/conf.d/aio.conf
     state: absent
-  register: del_nm_aio
   become: yes
+  notify: Reload Network Manager
   tags: cleanup
-
-- name: Reload Network Manager
-  service:
-    name: NetworkManager
-    state: reloaded
-  become: yes
-  when: (del_dnsmasq_aio.changed | bool) or (del_nm_aio.changed | bool)
-  tags: cleanup
-

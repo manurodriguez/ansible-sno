@@ -4,9 +4,6 @@
   - validation
   - create_registry
 
-- include_tasks: 20_sub_man_register.yml
-  tags: subscription
-
 - include_tasks: 30_req_packages.yml
   tags: packages
 

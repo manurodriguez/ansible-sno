@@ -8,7 +8,7 @@
   <bridge name='tt0' stp='on' delay='0'/>
   <domain name='{{ cluster }}.{{ domain }}'/>
   <dns enable='yes'>
-    <host ip='{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}'>
+    <host ip='{{ extcidrnet | ipaddr('10') | ipaddr('address') }}'>
       <hostname>api.{{ cluster }}.{{ domain }}</hostname>
       <hostname>api-int.{{ cluster }}.{{ domain }}</hostname>
       <hostname>console-openshift-console.apps.{{ cluster }}.{{ domain }}</hostname>
@@ -17,10 +17,10 @@
       <hostname>master1.{{ cluster }}.{{ domain }}</hostname>
     </host>
   </dns>
-  <ip address='{{ extcidrnet | ansible.netcommon.ipaddr('first_usable') }}' prefix='{{ extcidrnet | ansible.netcommon.ipaddr('prefix') }}'>
+  <ip address='{{ extcidrnet | ipaddr('first_usable') }}' prefix='{{ extcidrnet | ipaddr('prefix') }}'>
     <dhcp>
-      <range start='{{ extcidrnet | ansible.netcommon.ipaddr('11') | ansible.netcommon.ipaddr('address') }}' end='{{ extcidrnet | ansible.netcommon.ipaddr('last_usable') }}'/>
-      <host mac='{{ vm_nic_mac }}' name='master1' ip='{{ extcidrnet | ansible.netcommon.ipaddr('10') | ansible.netcommon.ipaddr('address') }}'/>
+      <range start='{{ extcidrnet | ipaddr('11') | ipaddr('address') }}' end='{{ extcidrnet | ipaddr('last_usable') }}'/>
+      <host mac='{{ vm_nic_mac }}' name='master1' ip='{{ extcidrnet | ipaddr('10') | ipaddr('address') }}'/>
     </dhcp>
   </ip>
 </network>

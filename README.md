@@ -1,17 +1,14 @@
-== Playbooks to deploy Single Node Openshift on a libvirt VM
+## Playbooks to deploy Single Node Openshift on a libvirt VM
 
-=== Pre-requisites
+### Pre-requisites
 
 - A RHEL 8.4 server with direct internet access
 - access to base and appstream repos required. 
-- If the vars activation_key and org_id are provided registration is done during the deployment.
+- ansible and git installed in your workstation where the deploy-sno.yml playbook is executed
 
 Install the following in the hypervisor (provisioner node)
 ```bash
-ansible-galaxy collection install containers.podman
-ansible-galaxy collection install ansible.posix
-ansible-galaxy collection install ansible.netcommon
-ansible-galaxy collection install community.libvirt
+sudo dnf install -y python3-netaddr
 ```
 
 Configure the following in the inventory for ansible
@@ -22,17 +19,31 @@ Configure the following in the inventory for ansible
   * pull secret
   * domain
   * cluster name
-  - dir to store deployment files
+  * dir to store deployment files
   * extcidrnet
   * provisioner host entry
   * proxy if required
 
-=== Deploy
+Example:
+```bash
+[all:vars]
+dir="{{ ansible_user_dir }}/clusterconfigs"
+domain="example.com"
+cluster="ocp4"
+extcidrnet="192.168.126.0/24"
+pullsecret="Add-your-pull-secret-in-json"
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+[provisioner]
+<IP-of-host-where-SNO-will-be-installed ansible_user=<add-your-user-name>
+```
+
+### Deploy
 ```bash
 ansible-playbook deploy-sno.yml -i /etc/ansible/hosts 
 ```
 
-=== Delete
+### Delete
 ```bash
 ansible-playbook deploy-sno.yml -i /etc/ansible/hosts -t cleanup
 ```

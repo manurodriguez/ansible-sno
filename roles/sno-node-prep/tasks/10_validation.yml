@@ -9,6 +9,16 @@
   - validation
   - fully_disconnected
 
+- name: Ensure Python libraries are installed
+  python_requirements_info:
+    dependencies:
+    - netaddr
+  register: _py_facts
+  delegate_to: localhost
+  tags:
+  - always
+  - validation
+
 - name: Fail if version is undefined or empty.
   fail:
     msg: "The version is undefined or empty. Use a value such as 'latest-4.8' or an explicit version '4.8.2'."
@@ -58,7 +68,7 @@
   tags:
   - validation
 
-- name: Fail when provision host no online access and registry host not creating registry (can't assume access)
+- name: Fail when provision host no online access (can't assume access)
   fail:
     msg: |
          A host with online access is required. Support for disconnected install is not added yet.

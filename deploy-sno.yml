@@ -2,12 +2,8 @@
 - name: 'Single Node Openshift Deployment on Libvirt'
   hosts: provisioner
   vars:
-    version: "4.8.5"
+    version: "4.8.11"
     build: "ga"
-  environment:
-    no_proxy: ".{{ cluster }}.{{ domain }},{{ extcidrnet }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
   tasks:
 
   - name: "Prepare SNO Host"

@@ -10,7 +10,7 @@
   tags: user
 
 - name: Grant "{{ ansible_user }}" user execute access to "{{ ansible_user_dir }}"
-  ansible.posix.acl:
+  acl:
     path: "{{ ansible_user_dir }}"
     entity: qemu
     etype: user

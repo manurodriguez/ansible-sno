@@ -1,7 +1,7 @@
 ---
 - name: "Wait for API to be available"
   uri:
-    url: 'https://api.{{ cluster }}.{{ domain}}:6443/readyz'
+    url: 'https://api.{{ cluster }}.{{ domain }}:6443/readyz'
     validate_certs: no
     return_content: yes
   register: api_ready
