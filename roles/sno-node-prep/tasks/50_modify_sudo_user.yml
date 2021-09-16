@@ -16,3 +16,4 @@
     etype: user
     permissions: x
     state: present
+  tags: user

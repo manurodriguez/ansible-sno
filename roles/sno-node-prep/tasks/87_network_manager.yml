@@ -13,9 +13,11 @@
   tags: dnsredirect
 
 - name: Include dnsmasq in the DNS configuration of NetworkManager
-  copy:
-    content: "[main]\ndns=dnsmasq"
-    dest: /etc/NetworkManager/conf.d/dnsmasq.conf
+  ini_file:
+    path: /etc/NetworkManager/conf.d/dnsmasq.conf
+    section: main
+    option: dns
+    value: dnsmasq
     owner: root
     group: root
     mode: u=rw,g=r,o=r

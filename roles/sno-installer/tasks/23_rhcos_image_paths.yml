@@ -2,7 +2,7 @@
 - name: Get COMMIT_ID
   shell: >
     set -o pipefail && \
-    /usr/local/bin/{{ cmd }} version | grep '^built from commit' | awk '{print $4}'
+    /usr/local/bin/{{ installer_extract_cmd }} version | grep '^built from commit' | awk '{print $4}'
   register: commit_id
   tags: rhcospath
 

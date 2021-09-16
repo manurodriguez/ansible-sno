@@ -44,5 +44,5 @@
 - include_tasks: 60_deploy_sno.yml
   tags: install
 
-- include_tasks: 70_wait_deployment.yml 
+- include_tasks: 70_wait_deployment.yml
   tags: waitdeploy

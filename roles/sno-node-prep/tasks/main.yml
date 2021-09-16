@@ -26,7 +26,16 @@
   tags: virtnetwork
 
 - include_tasks: 87_network_manager.yml
+  when:
+    - ansible_facts['distribution'] == "RedHat"
+  tags: dnsredirect
+
+- include_tasks: 88_etc_hosts.yml
+  when:
+    - ansible_facts['distribution'] == "Fedora"
   tags: dnsredirect
 
 - include_tasks: 90_create_config_install_dirs.yml
-  tags: clusterconfigs
+  tags:
+    - clusterconfigs
+    - cleanup

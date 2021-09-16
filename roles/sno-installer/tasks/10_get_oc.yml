@@ -1,23 +1,4 @@
 ---
-- name: Find any old tmp dirs with OpenShift related binaries
-  find:
-    paths: /tmp
-    patterns: 'ansible.*'
-    file_type: directory
-  register: tmp_results
-  tags:
-  - cleanup
-  - getoc
-
-- name: Delete any old tmp dirs with OpenShift related binaries
-  file:
-    path: "{{ item['path'] }}"
-    state: absent
-  loop: "{{ tmp_results['files'] }}"
-  tags:
-  - cleanup
-  - getoc
-
 - name: Find any existing /usr/local/bin OpenShift binaries
   find:
     paths: /usr/local/bin
@@ -49,16 +30,10 @@
     tempdir: "{{ tempdiroutput.path }}"
   tags: getoc
 
-- name: Setting Fact of which ansible temp file to use
-  set_fact:
-    temp_directory_loc: "{{ tempdir }}"
-  tags:
-  - getoc
-
 - name: Get the ocp client tar gunzip file
   get_url:
     url: "{{ release_url }}/{{ version }}/openshift-client-linux-{{ release_version }}.tar.gz"
-    dest: "{{ temp_directory_loc }}"
+    dest: "{{ tempdir }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '0755'
@@ -86,4 +61,5 @@
   loop:
     - kubectl
     - oc
+  notify: "Delete any old tmp dirs with OpenShift related binaries"
   tags: getoc
